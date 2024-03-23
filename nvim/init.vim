@@ -1,48 +1,27 @@
-"Add line numbers 
-set number
+
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>ft  <cmd>Telescope current_buffer_fuzzy_find<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+set number 
 call plug#begin()
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
 
-" Make sure you use single quotes
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-
 " On-demand loading
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'ryanoasis/vim-devicons'
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Using a non-default branch
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'windwp/nvim-autopairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
-
 " vim tex
 Plug 'lervag/vimtex'
 let g:tex_flavor='latex'
@@ -50,14 +29,17 @@ let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
-
-" Initialize plugin system
-" - Automatically executes `filetype plugin inde
-
-
 Plug 'Pocco81/true-zen.nvim'
-
 Plug 'Pocco81/auto-save.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'zootedb0t/citruszest.nvim'
+Plug 'mhinz/vim-startify'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 " You can revert the settings after the call like so:
 "   filetype indent off   " Disable file-type-specific indentation
@@ -65,21 +47,18 @@ call plug#end()
 "
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']  " using Neovim
 hi clear Conceal
-
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 lua << EOF
-	require("true-zen").setup {
-		-- your config goes here
-		-- or just leave it empty :)
-	}
+	require("true-zen").setup {}
+        require("auto-save").setup {}
+	require("nvim-autopairs").setup {}
+
+
+
 EOF
 
-lua << EOF
-	require("auto-save").setup {
-		-- your config goes here
-		-- or just leave it empty :)
-	}
-EOF
-
+let g:airline_theme='transparent'
+let g:airline#extensions#tabline#enabled = 1
+colorscheme citruszest
 
